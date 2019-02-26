@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import { NavLink } from 'react-router-dom'
+import Logo from '@/components/Logo/Logo.js'
+
 import './SignUp.less';
 import logo from '@/logo.svg'
 
@@ -50,19 +52,9 @@ class SignUp extends React.Component {
                 {pattern:/^(?!\d+$)(?![a-zA-Z]+$)[0-9a-zA-Z]+$/,message:'必须由字母和数字组成!'},
             ]
         };
-        let confirmField={
-            normalize:this.normalize,
-            validateFirst:true,
-            rules:[
-                {required:true,message:'Please input your password!'},
-                {validator}
-            ]
-        }
         return (
             <div className="Sign">
-                <div className="Sign-logo">
-                    <img width="100%" height="100%" src={logo} alt="logo" />
-                </div>
+                <Logo/>
                 <Form onSubmit={this.handleSubmit} className="Sign-form">
                     <Form.Item>
                         {getFieldDecorator('username', {
@@ -86,19 +78,6 @@ class SignUp extends React.Component {
                                 }
                                 type="password"
                                 placeholder="Password"
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('confirm', {
-                            ...confirmField
-                        })(
-                            <Input
-                                prefix={
-                                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                                }
-                                type="password"
-                                placeholder="Confirm password"
                             />
                         )}
                     </Form.Item>

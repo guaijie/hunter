@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Checkbox,} from 'antd'
 import { NavLink} from 'react-router-dom'
+import Logo from '@/components/Logo/Logo.js'
+
 import './Login.less';
 import logo from '@/logo.svg'
 
@@ -29,9 +31,7 @@ class Login extends React.Component{
         };
         return (
             <div className="Login">
-                <div className="Login-logo">
-                    <img width="100%" height="100%" src={logo} alt="logo"/>
-                </div>
+                <Logo/>
                 <Form onSubmit={this.handleSubmit} className="Login-form">
                     <Form.Item>
                         {getFieldDecorator('username', {
