@@ -30,7 +30,7 @@ class Login extends React.Component{
         return (
             <div className="Login">
                 <div className="Login-logo">
-                    <img width="100%" height="100%" src={logo} alt="picture"/>
+                    <img width="100%" height="100%" src={logo} alt="logo"/>
                 </div>
                 <Form onSubmit={this.handleSubmit} className="Login-form">
                     <Form.Item>

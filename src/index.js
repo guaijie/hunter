@@ -13,7 +13,7 @@ import { createStore,compose } from 'redux'
 
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
-let devToolsExtension=window.devToolsExtension?window.devToolsExtension():'';
+let devToolsExtension=window.__REDUX_DEVTOOLS_EXTENSION__?window.__REDUX_DEVTOOLS_EXTENSION__():'';
 
 const store=createStore(reducer,compose(devToolsExtension));
 
