@@ -1,0 +1,13 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": false,
+  "env": {
+    "NODE_ENV":"development",
+    "PORT": "3000"
+  },
+  "legacy-watch": false
+}
