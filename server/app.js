@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {//错误处理
   // render the error page
   res.status(err || 500);
-  if(err.code>=400&&err.code<500){
+  if(err.status>=400&&err.status<500){
     res.redirect('/')
   }else{
     res.sendStatus(500)
