@@ -23,7 +23,7 @@ user.use(function(req,res,next){
 
 /*用户登入*/
 user.use('/',(req,res,next)=>{
-  next({code:400})
+  next({status:400})
 })
 user.use('/userLogin',userLogin)
 /*用户注册*/
