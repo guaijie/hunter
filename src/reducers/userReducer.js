@@ -27,6 +27,7 @@ export function userLogin(){
     // return {type}
 }
 export function userRegiset(data){
+    message.destroy()
     return dispatch=>{
         axios.post('/userLogin',data)
         .then(({data:res})=>{

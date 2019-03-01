@@ -5,8 +5,7 @@ import Logo from '@/components/Logo/Logo.js'
 import { connect } from 'react-redux'
 import './SignUp.less';
 import { userRegiset } from '@/reducers/userReducer.js'
-import { Observable , pipe } from 'rxjs'
-import { debounceTime, delay } from 'rxjs/operators'
+import { debounce } from 'lodash'
 
 @connect(
     state=>state.user,
@@ -14,41 +13,20 @@ import { debounceTime, delay } from 'rxjs/operators'
 )
 class SignUp extends React.Component {
 
-    constructor(props){
-        super(props)
-        this.observable=new Observable()
-    }
     componentDidMount(){
        
     }
 
-    safeOption=(e)=>{
-        e.preventDefault();
-        // this.observable =new Observable(subscriber => {
-        //     subscriber.next(e);
-        // });
-        // console.log(this.observable)
-
-        this.observable
-        .pipe(debounceTime(1000))
-        .pipe(delay(1500))
-        .subscribe({
-            next:()=>{
-                console.log(1111)
-            }
-        })
-    }
-
     handleSubmit = e => {
-        e.preventDefault();
-        var { validateFields } = this.props.form;
+
+        var { validateFields } = this.props.form; 
         validateFields((errors, values) => {
             if (!errors) {
                 console.log(values)
                 this.props.userRegiset(values);
                 console.log(this.props)
             }
-        });
+        })
     }
     handleChange(e) {
         console.log(e)
@@ -84,7 +62,7 @@ class SignUp extends React.Component {
         return (
             <div className="Sign">
                 <Logo/>
-                <Form onSubmit={this.safeOption} className="Sign-form">
+                <Form /* onSubmit={this.handleSubmit} */ className="Sign-form">
                     <Form.Item>
                         {getFieldDecorator('username', {
                             ...usernameField
@@ -131,7 +109,10 @@ class SignUp extends React.Component {
                         )}
                     </Form.Item>
                     <Form.Item>
-                        <Button block type="primary" htmlType="submit">
+                        <Button onClick={debounce(this.handleSubmit,500,{
+                            leading:false,
+                            trailing:true
+                        })} block type="primary" htmlType="button">
                             Sign Up
                     </Button>
                     </Form.Item>
