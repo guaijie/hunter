@@ -12,7 +12,7 @@ let userSchema=new Schema({
 });
 
 
-userSchema.method('crypto',(data)=>{
+userSchema.method('crypto',function(data){
   let hmac=crypto.createHmac('md5',USER_SECRET);
   return hmac.update(data).digest('base64')
 })

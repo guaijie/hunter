@@ -11,9 +11,15 @@ for(key in models){
 }
 
 
-var user= new mongoose.model('userModel')()
-// console.log(user.crypto('ddd'))
-
+var user= new mongoose.model('userModel')({username:'jie'})
+console.log(user.crypto('ddd'))
+mongoose.model('userModel').find()
+.then(function(){
+  console.log(this)
+})
+.catch(function(err){
+  console.log(err)
+})
 module.exports={
   getModel(name){
     return mongoose.model(name)
