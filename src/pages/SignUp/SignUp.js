@@ -4,13 +4,11 @@ import { NavLink } from 'react-router-dom'
 import Logo from '@/components/Logo/Logo.js'
 
 import './SignUp.less';
-import logo from '@/logo.svg'
 
 class SignUp extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        console.log(this)
         var { validateFields } = this.props.form;
         validateFields((errors, values) => {
             if (!errors) {

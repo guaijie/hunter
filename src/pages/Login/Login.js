@@ -4,29 +4,39 @@ import { NavLink} from 'react-router-dom'
 import Logo from '@/components/Logo/Logo.js'
 
 import './Login.less';
-import logo from '@/logo.svg'
 
 class Login extends React.Component{
 
-    handleSubmit(e){
-        console.log(e)
+    handleSubmit = e => {
+        e.preventDefault();
+        var { validateFields } = this.props.form;
+        validateFields((errors, values) => {
+            if (!errors) {
+                console.log(values)
+            }
+        });
     }
+
+    normalize=value=>{
+        if(value){
+            return value.trim()
+        }
+    };
     
     render(){
         let {getFieldDecorator}=this.props.form;
         let usernameField={
+            normalize:this.normalize,
+            validateFirst:true,
             rules:[
                 { required: true, message: 'Please input your username!' },
             ]
         };
         let passwordField={
+            normalize:this.normalize,
+            validateFirst:true,
             rules:[
                 { required: true, message: 'Please input your password!' },
-            ]
-        };
-        let phoneField={
-            rules:[
-                { required: true, message: 'Please input your phone!' },
             ]
         };
         return (
@@ -67,7 +77,7 @@ class Login extends React.Component{
                         )}
                     </Form.Item> 
                     <Form.Item>
-                        <Button block type="primary" htmlType="button">
+                        <Button block type="primary" htmlType="submit">
                             Log in
                         </Button>
                     </Form.Item> 
