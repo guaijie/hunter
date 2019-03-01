@@ -19,15 +19,9 @@ user.use(function(req,res,next){
 
 })
 
-
-
 /*用户登入*/
 user.use('/',(req,res,next)=>{
-<<<<<<< Updated upstream
   next({status:400})
-=======
-  next({stauts:400})
->>>>>>> Stashed changes
 })
 user.use('/userLogin',userLogin)
 /*用户注册*/
