@@ -12,6 +12,16 @@ const NODE_ENV=process.env.NODE_ENV;
 
 const app = express();
 
+app.use(function(req,res,next){
+  res.status(200).json({
+    success:true,
+    user:{
+      username:'jie',
+    },
+    msg:'注册失败！'
+  })
+})
+
 app.use(NODE_ENV==='production'?logger('combined'):logger('dev'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'dist')));//设定前端静态资源路径
@@ -20,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(['guai','jie']));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'dist/views'));//设定视图的目录
+app.set('views', path.join(__dirname, 'dist'));//设定视图的目录
 app.engine('html',require('ejs').renderFile);
 
 /*路由*/

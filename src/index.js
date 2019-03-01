@@ -6,15 +6,15 @@ import {Provider} from 'react-redux'
 
 
 
-import {memberReducer as reducer} from './reducers/reducer.js'
-
-import { createStore,compose } from 'redux'
+import combineReducers from './reducers/reducer.js'
+import { createStore,compose,applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
 let devToolsExtension=window.__REDUX_DEVTOOLS_EXTENSION__?window.__REDUX_DEVTOOLS_EXTENSION__():'';
 
-const store=createStore(reducer,compose(devToolsExtension));
+const store=createStore(combineReducers,compose(applyMiddleware(thunk),devToolsExtension));
 
 
 // ReactDOM.render(<MainRouter store={store} />, document.getElementById('root'));

@@ -86,7 +86,7 @@ class Login extends React.Component{
                             
                 <div className="Login-sign">
                     Don't have an account?
-                    <NavLink to="/signup">Sign now!</NavLink>
+                    <NavLink to="/signup">Sign up now!</NavLink>
                 </div>
                 
             </div>
