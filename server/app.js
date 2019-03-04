@@ -4,7 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');//日志记录
 const multer=require('multer');//处理文件上传
-
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/userRoutes/index.js');
 
@@ -12,21 +11,11 @@ const NODE_ENV=process.env.NODE_ENV;
 
 const app = express();
 
-app.use(function(req,res,next){
-  res.status(200).json({
-    success:false,
-    user:{
-      username:'jie',
-    },
-    msg:'注册失败！'
-  })
-})
-
 app.use(NODE_ENV==='production'?logger('combined'):logger('dev'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'dist')));//设定前端静态资源路径
 app.use(express.urlencoded({ extended: true }));
-// app.use(multer().any());
+app.use(multer().any());
 app.use(cookieParser(['guai','jie']));
 
 // view engine setup
@@ -56,7 +45,9 @@ app.use(function(req, res, next) {
 // 统一 error handler
 app.use(function(err, req, res, next) {//错误处理
   // render the error page
-  res.status(err || 500);
+  console.log(err.status,err.name,err.codeName)
+  console.log(err)
+  res.status(err.status || 500);
   if(err.status>=400&&err.status<500){
     res.redirect('/')
   }else{
