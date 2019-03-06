@@ -7,31 +7,30 @@ const {
   validateMethods,
   validatePaths,
   validateField,
-  deCipherData
 }=require('../util.js');
 const ObjectID = require('mongodb').ObjectID;
 
 router.use(validateMethods('post','get'));
 router.use(validatePaths('/'));
 
-/*判断用户输入是否为空*/
 router.route('/')
 .all((req,res,next)=>{
-  let data=req.signedCookies;
-  console.log(data)
-  req.data=data;
+  req.data=req.signedCookies;
   next()
 })
 .all(validateField('sessionToken','用户尚未登录！'))
 .all((req,res,next)=>{
-  let _id=deCipherData(req.data.sessionToken);
-  console.log(_id)
-  UserModel.findOne({_id})
+  let conditions={_id:0,password:0,sessionToken:0};
+  let sessionToken=req.data.sessionToken;
+  console.log(sessionToken)
+  UserModel.findOne({sessionToken},conditions)
   .then((doc)=>{
-    console.log(doc)
     if(doc){
       res.status(200)
-      .json(doc.toJSON())
+      .json({
+        success:true,
+        user:doc.toJSON()
+      })
     }else{
       res.status(200)
       .json({

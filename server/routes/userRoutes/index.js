@@ -13,7 +13,7 @@ router.use(validatePaths('/userInfo','/userLogin','/userRegister'));
 
 /*连接数据库*/
 router.use(function(req,res,next){
-  mongoose.connect('mongodb://guai:123456@localhost:27017/test',{useNewUrlParser:true})
+  mongoose.connect('mongodb://jie:123456@localhost:27017/test',{useNewUrlParser:true})
   .then(()=>{
     next();
   })

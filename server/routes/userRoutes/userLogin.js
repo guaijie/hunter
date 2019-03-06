@@ -7,7 +7,6 @@ const {
   validatePaths,
   validateField,
   cryptoDataByHamc,
-  cryptoDataByCipher
 }=require('../util.js');
 
 /*路由拦截*/
@@ -16,19 +15,21 @@ router.use(validatePaths('/'));
 
 /*用户登入*/
 let login=(req,res,next)=>{
-  let Conditions={_id:1,username:1,password:1};
-  let user =new UserModel(req.data);
-  UserModel.findOne(user,Conditions)
+  let conditions={_id:0,password:0};
+  let user =req.data;
+  UserModel.findOne(user,conditions)
   .then((doc)=>{
     if(doc){
-      res.cookie('sessionToken',cryptoDataByCipher(doc._id.toString()),{
+      doc=doc.toJSON();
+      res.cookie('sessionToken',doc.sessionToken,{
         domain:'',
-        path:'/user',
+        path:'*',
         maxAge:24*60*60*1000,
         httpOnly:true,
         signed:true
       });
-      res.status(200).json({success:true,msg:'登入成功!'})
+      doc.sessionToken=undefined
+      res.status(200).json({success:true,msg:'登入成功!',user:doc})
     }else{
       res.status(200).json({success:false,msg:'用户名或密码错误！'})
     }
@@ -45,10 +46,11 @@ router.route('/')
   next()
 })
 .post(validateField('username','用户名不能为空！'))
-.post(validateField('password','密码不能为空！'))
+.post(validateField('password','用户密码不能为空！'))
+.post(validateField('userType','用户类型不能为空！'))
 .post((req,res,next)=>{
-  let pwd=req.data.password;
-  req.data.password=cryptoDataByHamc(pwd);
+  let {password}=req.data;
+  req.data.password=cryptoDataByHamc(password);
   next()
 })
 .post(login)
