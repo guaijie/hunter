@@ -1,8 +1,13 @@
 const { addBabelPlugin, override, fixBabelImports, addLessLoader, addWebpackAlias  } = require('customize-cra');
+const AntDesignThemePlugin = require('antd-theme-webpack-plugin');
 const path = require('path');
-
 const src=path.resolve(__dirname,'src');
 
+let addWebpackPlugin=plugin=>config=>{
+    config.plugins.push(plugin);
+    return config
+}
+console.log(new AntDesignThemePlugin({generateOnce:true}))
 module.exports = override(
     fixBabelImports('import', {
         libraryName: 'antd',
@@ -14,9 +19,11 @@ module.exports = override(
     ),
     addLessLoader({
         javascriptEnabled: true,
-        modifyVars: { '@primary-color': '#1DA57A' },
     }),
     addWebpackAlias({
         '@':src
-    })
-);
+    }),
+    // addWebpackPlugin(new AntDesignThemePlugin({indexFileName:false}))
+)
+
+

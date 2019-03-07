@@ -12,9 +12,6 @@ let avatars=[
 
 class AvatarPick extends React.Component{
 
-    componentDidMount(){
-        // console.log(this.props.avatar())
-    }
     state={
         visible:false,
     }
@@ -45,20 +42,6 @@ class AvatarPick extends React.Component{
         let { visible } = this.state;
         return (
             <div className="Avatar">
-                <div className="Avatar-carousel">
-                    <Carousel afterChange={this.afterToggleAvatar} ref="carousel" dots="{false}" effect="fade">
-                        { 
-                            avatars.map((v,i)=>{
-                                let src=require(`@\/assets/avatars\/${v}.png`);
-                                return (
-                                    <div key={i} className="Avatar-avatar">
-                                        <img onClick={this.openModal} width="100" height="100" src={src}/>
-                                    </div>
-                                )
-                            })
-                        }
-                    </Carousel>    
-                </div>
                 <Modal
                     visible={visible}
                     title={<h2 className="Avatar-modal-title">选择头像</h2>}
@@ -77,6 +60,21 @@ class AvatarPick extends React.Component{
                         </div>
                     </div>    
                 </Modal>
+                <div className="Avatar-carousel">
+                    <Carousel afterChange={this.afterToggleAvatar} ref="carousel" dots="{false}" effect="fade">
+                        { 
+                            avatars.map((v,i)=>{
+                                let src=require(`@\/assets/avatars\/${v}.png`);
+                                return (
+                                    <div key={i} className="Avatar-avatar">
+                                        <img onClick={this.openModal} width="100" height="100" src={src}/>
+                                    </div>
+                                )
+                            })
+                        }
+                    </Carousel>    
+                </div>
+                
             </div>
             
         )

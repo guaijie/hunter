@@ -37,6 +37,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "antd-theme-generator": "^1.1.6",
+    "antd-theme-webpack-plugin": "^1.2.0",
     "remote-redux-devtools": "^0.5.16"
   },
   "proxy": "http://localhost:3600/"

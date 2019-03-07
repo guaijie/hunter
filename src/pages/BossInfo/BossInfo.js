@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Icon, Input, Button, Checkbox,} from 'antd'
 import { NavLink} from 'react-router-dom'
 import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
+import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 import './BossInfo.less';
 
 class BossInfo extends React.Component{
@@ -20,6 +21,7 @@ class BossInfo extends React.Component{
 
         return (
             <div>
+                <EasyMenu></EasyMenu>
                 <AvatarPick avatar={this.getAvatar}></AvatarPick>
             </div>
             
