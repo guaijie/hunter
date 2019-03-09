@@ -40,18 +40,20 @@ class AvatarPick extends React.Component{
     
     render(){
         let { visible } = this.state;
+        let style=this.props.style;
         return (
-            <div className="Avatar">
+            <div className="Avatar-picker">
                 <Modal
+                    className="Avatar-picker-modal"
                     visible={visible}
-                    title={<h2 className="Avatar-modal-title">选择头像</h2>}
+                    title={<h2 className="modal-title">选择头像</h2>}
                     footer={
-                        <div className="Avatar-modal-footer" onClick={this.handleCancel}>cancel</div>
+                        <div className="modal-footer" onClick={this.handleCancel}>cancel</div>
                     }
                     width="80vw"
                     closable={false}
                 >
-                    <div className="Avatar-models">
+                    <div className="models">
                         <div>
                             <Icon style={{fontSize:'30px'}} theme="twoTone" twoToneColor="#eb2f96" type="picture"></Icon>
                         </div>
@@ -60,14 +62,14 @@ class AvatarPick extends React.Component{
                         </div>
                     </div>    
                 </Modal>
-                <div className="Avatar-carousel">
+                <div onClick={this.openModal} style={style?style:null} className="carousel">
                     <Carousel afterChange={this.afterToggleAvatar} ref="carousel" dots="{false}" effect="fade">
                         { 
                             avatars.map((v,i)=>{
                                 let src=require(`@\/assets/avatars\/${v}.png`);
                                 return (
-                                    <div key={i} className="Avatar-avatar">
-                                        <img onClick={this.openModal} width="100" height="100" src={src}/>
+                                    <div key={i} className="avatar">
+                                        <img width="100%" height="100%" src={src}/>
                                     </div>
                                 )
                             })

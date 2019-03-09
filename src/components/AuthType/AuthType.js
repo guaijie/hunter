@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 @withRouter
 class AuthType extends React.Component{
     componentDidMount(){
-        let paths=['/login','/signup','/bossinfo'];
+        let paths=['/login','/signup','/bossinfo', '/easytextarea'];
         let pathname=this.props.location.pathname;
         let push=this.props.history.push;
         if(paths.includes(pathname)){

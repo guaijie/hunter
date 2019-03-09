@@ -7,12 +7,14 @@ import Home from './pages/Home/Home.js'
 import SignUp from './pages/SignUp/SignUp.js'
 import Login from './pages/Login/Login.js'
 import BossInfo from './pages/BossInfo/BossInfo.js'
+import EasyTextarea from './components/EasyTextarea/EasyTextarea.js'
 const routes=[
     {path:'/',exact:true,component:Bootstrap},
     {path:'/home',component:Home},
     {path:'/login',component:Login},
     {path:'/signup',component:SignUp},
-    {path:'/bossinfo',component:BossInfo}
+    {path:'/bossinfo',component:BossInfo},
+    {path:'/easytextarea',component:EasyTextarea}
 ]
 
 const supportsHistory = 'pushState' in window.history

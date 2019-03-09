@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import './SignUp.less';
 import { userRegiset } from '@/reducers/userReducer.js'
 import { debounce } from 'lodash'
+import {normalizeInput} from '@/util.js';
 
 @connect(
     state=>state.user,
@@ -31,30 +32,23 @@ class SignUp extends React.Component {
     handleChange(e) {
         console.log(e)
     }
-    normalize=value=>{
-        if(value){
-            return value.trim()
-        }
-    };
     render() {
         const Option = Select.Option;
-
+        let normalize=normalizeInput(20)
         let { getFieldDecorator } = this.props.form;
         let usernameField={
-            normalize:this.normalize,
+            normalize:normalize,
             validateFirst:true,
             rules:[
                 {required:true,message:'Please input your username!' },
-                {max:16,message:'用户名不能超过16位!'},
                 {min:6,message:'用户名不能低于6位!'}
             ]
         };
         let passwordField={
-            normalize:this.normalize,
+            normalize:normalize,
             validateFirst:true,
             rules:[
                 {required:true,message:'Please input your password!'},
-                {max:16,message:'用户名不能超过16位!'},
                 {min:6,message:'用户名不能低于6位!'},
                 {pattern:/^(?!\d+$)(?![a-zA-Z]+$)[0-9a-zA-Z]+$/,message:'必须由字母和数字组成!'},
             ]

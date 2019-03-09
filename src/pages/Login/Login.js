@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Icon, Input, Button, Checkbox,} from 'antd'
 import { NavLink} from 'react-router-dom'
 import Logo from '@/components/Logo/Logo.js'
-
+import {normalizeInput} from '@/util.js';
 import './Login.less';
 
 class Login extends React.Component{
@@ -16,24 +16,19 @@ class Login extends React.Component{
             }
         });
     }
-
-    normalize=value=>{
-        if(value){
-            return value.trim()
-        }
-    };
     
     render(){
         let {getFieldDecorator}=this.props.form;
+        let normalize=normalizeInput(20)
         let usernameField={
-            normalize:this.normalize,
+            normalize:normalize,
             validateFirst:true,
             rules:[
                 { required: true, message: 'Please input your username!' },
             ]
         };
         let passwordField={
-            normalize:this.normalize,
+            normalize:normalize,
             validateFirst:true,
             rules:[
                 { required: true, message: 'Please input your password!' },
@@ -96,5 +91,5 @@ class Login extends React.Component{
     
 }
 
-Login=Form.create({ name: 'sign' })(Login);
+Login=Form.create({ name:'login' })(Login);
 export default Login
