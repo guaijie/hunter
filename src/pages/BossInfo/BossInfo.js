@@ -13,7 +13,9 @@ class BossInfo extends React.Component {
   state={
     avatar:'male',
     isOpen:true,
+    description:'',
   }
+
   getAvatar=(v)=>{
     this.setState({
       avatar: v
@@ -32,17 +34,21 @@ class BossInfo extends React.Component {
       isOpen:false,
     })
   }
+  handleField=(value)=>{
+    this.setState({
+      isOpen:true,
+      description:value
+    })
+  }
   render() {
-    let {isOpen}=this.state;
+    let {isOpen,description,avatar}=this.state;
     let normalize=normalizeInput(20);
-    let filed={
-      rules:[
-        { required: true, message: '必填项不能为空!' },
-      ]
-    }
+    let rules=[
+      { required: true, message: '必填项不能为空!' },
+    ]
+
     let prefix = <Button type="primary" shape="circle" icon="arrow-left" />;
     let {getFieldDecorator}=this.props.form;
-    let avatar=this.state.avatar;
     let Option=Select.Option;
     let TextArea=Input.TextArea;
     let companyTypes=[
@@ -56,12 +62,12 @@ class BossInfo extends React.Component {
     ];
     return (
       <div className="Boss-info">
-        <EasyMenu
-          prefix={prefix}
-        >
-          <h2 className="menu-title">完善信息</h2>
-        </EasyMenu>
         <div style={{display:isOpen?'block':'none'}}>
+          <EasyMenu
+            prefix={prefix}
+          >
+            <h2 className="menu-title">完善信息</h2>
+          </EasyMenu>
           <div className="avatar-container">
             <AvatarPick avatar={this.getAvatar}></AvatarPick>
           </div>
@@ -73,7 +79,7 @@ class BossInfo extends React.Component {
               }
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('company',{...filed,normalize})(
+              {getFieldDecorator('company',{rules,normalize})(
                 <Input
                   prefix={
                     <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
@@ -83,7 +89,7 @@ class BossInfo extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('realname', {...filed,normalize})(
+              {getFieldDecorator('realname', {rules,normalize})(
                 <Input
                   prefix={
                     <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
@@ -93,7 +99,7 @@ class BossInfo extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('companyTypes', filed)(
+              {getFieldDecorator('companyTypes', {rules})(
                 <Select
                   tokenSeparators={[',',' ']}
                   mode="multiple"
@@ -107,7 +113,7 @@ class BossInfo extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('industryTypes',filed)(
+              {getFieldDecorator('industryTypes',{rules})(
                 <Select
                   tokenSeparators={[',',' ']}
                   mode="multiple"
@@ -122,12 +128,22 @@ class BossInfo extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('description',{...filed,normalize:normalizeInput(3000)})(
-                <TextArea
+              {getFieldDecorator('description',{
+                rules,
+                initialValue:description,
+                normalize:normalizeInput(3000)
+              })(
+                <Input
+                  style={{
+                    'overflow':'hidden',
+                    'white-space':'nowrap',
+                    'text-overflow':'ellipsis'
+                  }}
                   onFocus={
                     this.openEasyTextarea
                   }
                   className="text-area"
+                  placeholder="请输入企业简介"
                 />
               )}
             </Form.Item>
@@ -139,7 +155,13 @@ class BossInfo extends React.Component {
           </Form>
         </div>
         <div style={{display:isOpen?'none':'block'}}>
-          <EasyTextarea></EasyTextarea>
+          <EasyTextarea 
+            normalize={normalizeInput(3000)} 
+            onHandelField={this.handleField}
+            rules={rules}
+          >
+            
+          </EasyTextarea>
         </div>
       </div>
     )

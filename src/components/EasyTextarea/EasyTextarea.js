@@ -2,7 +2,6 @@ import React from 'react'
 import { Row, Col, Form, Message, Modal, Icon, Input, Button, Checkbox, } from 'antd'
 import { NavLink } from 'react-router-dom'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
-import {normalizeInput} from '@/util.js';
 import './EasyTextarea.less';
 
 Message.config({
@@ -13,33 +12,34 @@ Message.config({
 
 class EasyTextarea extends React.Component {
 
-  state = {
-  }
-  tranformFiled=this.props.onTranformFiled
+  handleField=this.props.onHandelField
   handleSubmit=(e)=>{
     let { validateFields } = this.props.form;
     validateFields({first:true},(errors, values) => {
-      // Message.destroy()
+      console.log(values)
       if (errors) {
         Message.open({
-          content:errors.filed.errors[0].message,
+          content:errors.field.errors[0].message,
           icon:<Icon type="save"/>
         });
       }else{
-        this.tranformFiled(values.field)
+        this.handleField(values.field)
       }
     });
+  }
+  cancelSubmit=()=>{
+    this.handleField('')
   }
   render() {
     let extra=this.props.extra;
     let {getFieldDecorator,getFieldError,validateFields}=this.props.form;
-    let normalize=normalizeInput(20);
+    let {normalize,rules}=this.props;
     let TextArea=Input.TextArea;
     let title=this.props.title;
     return (
       <div className="Easy-textarea">
         <EasyMenu
-          prefix={<Button type="primary" shape="circle" icon="arrow-left" />}
+          prefix={<Button onClick={this.cancelSubmit} type="primary" shape="circle" icon="arrow-left" />}
           suffix={
             <div className="save">
               <Button onClick={this.handleSubmit} type="primary" shape="circle" icon="save" />
@@ -54,15 +54,13 @@ class EasyTextarea extends React.Component {
             extra={extra}
           >
             {getFieldDecorator(
-              'filed',{
+              'field',{
+                rules,
                 validateTrigger:'onSubmit',
-                rules:[
-                 {required:true,message:'4rrrr'}
-                ],
                 normalize
               }
             )(
-              <TextArea className="textarea"></TextArea>
+              <TextArea autosize={true} className="textarea"></TextArea>
             )
             } 
             {/* <TextArea name="textarea" className="textarea"></TextArea> */}
