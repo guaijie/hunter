@@ -1,10 +1,17 @@
 import React from 'react'
-import { Form, Icon, Input, Button, Checkbox,} from 'antd'
+import { Form, Icon, Input, Button, Checkbox, Select} from 'antd'
 import { NavLink} from 'react-router-dom'
+import { connect } from 'react-redux'
 import Logo from '@/components/Logo/Logo.js'
-import {normalizeInput} from '@/util.js';
+import {normalizeInput} from '@/util.js'
 import './Login.less';
+import { userLogin } from '@/reducers/userReducer.js'
+import { debounce } from 'lodash'
 
+@connect(
+    state=>state.user,
+    {userLogin}
+)
 class Login extends React.Component{
 
     handleSubmit = e => {
@@ -12,7 +19,8 @@ class Login extends React.Component{
         var { validateFields } = this.props.form;
         validateFields((errors, values) => {
             if (!errors) {
-                console.log(values)
+                console.log(values);
+                this.props.userLogin(values);
             }
         });
     }
@@ -34,6 +42,7 @@ class Login extends React.Component{
                 { required: true, message: 'Please input your password!' },
             ]
         };
+        let Option=Select.Option;
         return (
             <div className="Login">
                 <Logo/>
@@ -63,6 +72,16 @@ class Login extends React.Component{
                             />
                         )}
                     </Form.Item> 
+                    <Form.Item>
+                        {getFieldDecorator('userType', {
+                            initialValue:'0'
+                        })(
+                            <Select>
+                                <Option value="0">牛人</Option>
+                                <Option value="1">Boss</Option>
+                            </Select>
+                        )}
+                    </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('remember', {
                             valuePropName: 'checked',

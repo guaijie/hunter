@@ -1,14 +1,14 @@
 import React from 'react'
-import { Form, Icon, Input, Button, Select, Row, Col} from 'antd'
+import { Form, Icon, Input, Button, Select, Row, Col, DatePicker} from 'antd'
 import { NavLink } from 'react-router-dom'
 import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 import EasyTextarea from '@/components/EasyTextarea/EasyTextarea.js'
-import './BossInfo.less';
+import './ExpertInfo.less';
 import {normalizeInput} from '@/util.js';
 
 
-class BossInfo extends React.Component {
+class ExpertInfo extends React.Component {
   textareaSize=3000
   state={
     avatar:'male',
@@ -63,12 +63,12 @@ class BossInfo extends React.Component {
     let {getFieldDecorator}=this.props.form;
     let Option=Select.Option;
     let TextArea=Input.TextArea;
-    let companyTypes=[
-      {value:1,label:'民营企业'},
-      {value:2,label:'国有企业'},
-      {value:3,label:'上市企业'}
+    let education=[
+      {value:1,label:'博士'},
+      {value:2,label:'硕士'},
+      {value:3,label:'本科'}
     ];
-    let industryTypes=[
+    let specialties=[
       {value:1,label:'计算机与互联网'},
       {value:2,label:'化学化工'}
     ];
@@ -91,31 +91,29 @@ class BossInfo extends React.Component {
               }
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('company',{rules,normalize})(
+              {getFieldDecorator('realname',{rules,normalize})(
                 <Input
                   prefix={
-                    <Icon type="bank" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    <Icon type="user" style={{color:'rgba(0,0,0,.25)'}} />
                   }
-                  placeholder="请输入企业名称"
+                  placeholder="请输入真实姓名"
                 />
               )}
             </Form.Item>
             <Row gutter={6}>
               <Col span={12}>
                 <Form.Item>
-                  {getFieldDecorator('realname', {rules,normalize})(
-                    <Input
-                      prefix={
-                        <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                      }
-                      placeholder="请输入法定代表"
+                  {getFieldDecorator('birthday',{rules})(
+                    <DatePicker
+                      style="width:100%"
+                      placeholder="请选择出生年月"
                     />
                   )}
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item>
-                  {getFieldDecorator('phone', {rules,normalize:normalizeInput(11)})(
+                  {getFieldDecorator('phone',{rules,normalize:normalizeInput(11)})(
                     <Input
                       prefix={
                         <Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />
@@ -126,30 +124,44 @@ class BossInfo extends React.Component {
                 </Form.Item>
               </Col>
             </Row>
+            <Row gutter={6}>
+              <Col span={12}>
+                <Form.Item>
+                  {getFieldDecorator('school',{rules,normalize})(
+                    <Input
+                      prefix={
+                        <Icon type="bank" style={{ color: 'rgba(0,0,0,.25)' }} />
+                      }
+                      placeholder="请输毕业学校"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item>
+                  {getFieldDecorator('education',{rules})(
+                    <Select
+                      showSearch={true}
+                      placeholder="请输入最高学历"
+                    >
+                      {education.map(d => <Option key={d.value}>{d.label}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            
             <Form.Item>
-              {getFieldDecorator('companyTypes', {rules})(
+              {getFieldDecorator('specialties',{rules})(
                 <Select
                   tokenSeparators={[',',' ']}
                   mode="multiple"
                   showSearch={true}
+                  options={specialties}
                   maxTagCount={2}
-                  placeholder="请输入企业类型"
+                  placeholder="请输入所学专业"
                 >
-                  {companyTypes.map(d => <Option key={d.value}>{d.label}</Option>)}
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('industryTypes',{rules})(
-                <Select
-                  tokenSeparators={[',',' ']}
-                  mode="multiple"
-                  showSearch={true}
-                  options={industryTypes}
-                  maxTagCount={2}
-                  placeholder="请输入行业类型"
-                >
-                  {industryTypes.map(d => <Option key={d.value}>{d.label}</Option>)}
+                  {specialties.map(d => <Option key={d.value}>{d.label}</Option>)}
                 </Select>
               )}
             </Form.Item>
@@ -169,7 +181,7 @@ class BossInfo extends React.Component {
                     this.openEasyTextarea
                   }
                   className="text-area"
-                  placeholder="请输入企业简介"
+                  placeholder="请输入个人简介"
                 />
               )}
             </Form.Item>
@@ -182,8 +194,8 @@ class BossInfo extends React.Component {
         </div>
         <div style={{display:isOpen?'none':'block'}}>
           <EasyTextarea 
-            title="企业简介"
-            placeholder="请输入企业简介"
+            title="个人简介"
+            placeholder="请输入个人简介"
             change={this.change}
             save={this.save}
             back={this.back}
@@ -203,5 +215,5 @@ class BossInfo extends React.Component {
 
 }
 
-BossInfo=Form.create({ name: 'bossinfo' })(BossInfo);
-export default BossInfo
+ExpertInfo=Form.create({ name: 'expertinfo' })(ExpertInfo);
+export default ExpertInfo

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message } from 'antd';
 
-const REGISTER_SUCCESS='register_success';
+const SUCCESS='success';
 const FAILED='FAILED'
 
 let initState={
@@ -14,7 +14,7 @@ let initState={
 
 export function user(state=initState,{type,payload}){
     switch(type){
-        case REGISTER_SUCCESS:
+        case SUCCESS:
             return {...initState,...payload}
         case FAILED:
             return {...initState,...payload}
@@ -23,25 +23,63 @@ export function user(state=initState,{type,payload}){
     }
 }
 
-export function userLogin(){
-    // return {type}
-}
-export function userRegiset(data){
-    message.destroy()
+export function getUserInfo(){
     return dispatch=>{
-        axios.post('/userLogin',data)
+        axios.post('/user/userInfo')
+        .then(({data:res})=>{
+            console.log(res)
+            if(res.success){
+                dispatch({
+                    type:SUCCESS,
+                    payload:{isAuth:true,...res.user}
+                })
+            }else{
+                message.error(res.msg,1.5);
+                dispatch({
+                    type:SUCCESS,
+                    payload:{isAuth:false}
+                })
+            }
+        })
+    }
+}
+
+export function userLogin(data){
+    return dispatch=>{
+        axios.post('/user/userLogin',data)
         .then(({data:res})=>{
             console.log(res)
             if(res.success){
                 message.success(res.msg,1.5);
                 dispatch({
-                    type:REGISTER_SUCCESS,
-                    payload:{isAuth:true,...res.use}
+                    type:SUCCESS,
+                    payload:{isAuth:true,...res.user}
                 })
             }else{
                 message.error(res.msg,1.5);
                 dispatch({
-                    type:REGISTER_SUCCESS,
+                    type:SUCCESS,
+                    payload:{isAuth:false}
+                })
+            }
+        })
+    }
+}
+export function userRegiset(data){
+    return dispatch=>{
+        axios.post('/user/userRegister',data)
+        .then(({data:res})=>{
+            console.log(res)
+            if(res.success){
+                message.success(res.msg,1.5);
+                dispatch({
+                    type:SUCCESS,
+                    payload:{isAuth:true,...res.user}
+                })
+            }else{
+                message.error(res.msg,1.5);
+                dispatch({
+                    type:SUCCESS,
                     payload:{isAuth:false}
                 })
             }

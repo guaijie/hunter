@@ -12,37 +12,34 @@ Message.config({
 
 class EasyTextarea extends React.Component {
 
-  handleField=this.props.onHandelField
-  handleSubmit=(e)=>{
-    let { validateFields } = this.props.form;
-    validateFields({first:true},(errors, values) => {
-      console.log(values)
-      if (errors) {
-        Message.open({
-          content:errors.field.errors[0].message,
-          icon:<Icon type="save"/>
-        });
-      }else{
-        this.handleField(values.field)
-      }
-    });
-  }
   cancelSubmit=()=>{
     this.handleField('')
   }
   render() {
-    let extra=this.props.extra;
+    let {extra,decorator,placehold,title,save,change,back}=this.props
     let {getFieldDecorator,getFieldError,validateFields}=this.props.form;
-    let {normalize,rules}=this.props;
     let TextArea=Input.TextArea;
-    let title=this.props.title;
+    let handleSave=(e)=>{
+      let { validateFields } = this.props.form;
+      validateFields({first:true},(errors, values) => {
+        console.log(values)
+        if (errors) {
+          Message.open({
+            content:errors.field.errors[0].message,
+            icon:<Icon type="save"/>
+          });
+        }else{
+          save(values.field)
+        }
+      });
+    }
     return (
       <div className="Easy-textarea">
         <EasyMenu
-          prefix={<Button onClick={this.cancelSubmit} type="primary" shape="circle" icon="arrow-left" />}
+          prefix={<Button onClick={back} type="primary" shape="circle" icon="arrow-left" />}
           suffix={
             <div className="save">
-              <Button onClick={this.handleSubmit} type="primary" shape="circle" icon="save" />
+              <Button onClick={handleSave} type="primary" shape="circle" icon="save" />
             </div>
           }
         >
@@ -53,17 +50,13 @@ class EasyTextarea extends React.Component {
             help={false}
             extra={extra}
           >
-            {getFieldDecorator(
-              'field',{
-                rules,
-                validateTrigger:'onSubmit',
-                normalize
-              }
-            )(
-              <TextArea autosize={true} className="textarea"></TextArea>
-            )
+            {
+              getFieldDecorator(
+              'field',decorator
+              )(
+                <TextArea onChange={change} autosize={true} className="textarea"></TextArea>
+              )
             } 
-            {/* <TextArea name="textarea" className="textarea"></TextArea> */}
           </Form.Item>
         </Form>
       </div>

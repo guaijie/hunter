@@ -8,14 +8,19 @@ import { userRegiset } from '@/reducers/userReducer.js'
 import { debounce } from 'lodash'
 import {normalizeInput} from '@/util.js';
 
+let paths=['expertinfo','bossinfo']
 @connect(
     state=>state.user,
     {userRegiset}
 )
 class SignUp extends React.Component {
 
-    componentDidMount(){
-       
+    componentDidUpdate(){
+        let {isAuth,userType,history:{push}}=this.props;
+        if(isAuth){
+            push('/'+paths[userType])
+        }
+        return 
     }
 
     handleSubmit = e => {
@@ -28,9 +33,6 @@ class SignUp extends React.Component {
                 console.log(this.props)
             }
         })
-    }
-    handleChange(e) {
-        console.log(e)
     }
     render() {
         const Option = Select.Option;
@@ -56,7 +58,7 @@ class SignUp extends React.Component {
         return (
             <div className="Sign">
                 <Logo/>
-                <Form /* onSubmit={this.handleSubmit} */ className="Sign-form">
+                <Form className="Sign-form">
                     <Form.Item>
                         {getFieldDecorator('username', {
                             ...usernameField
@@ -84,13 +86,11 @@ class SignUp extends React.Component {
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('userType', {
-                            initialValue:'lucy'
+                            initialValue:'0'
                         })(
-                            <Select onChange={this.handleChange}>
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                                <Option value="disabled" disabled>Disabled</Option>
-                                <Option value="Yiminghe">yiminghe</Option>
+                            <Select>
+                                <Option value="0">牛人</Option>
+                                <Option value="1">Boss</Option>
                             </Select>
                         )}
                     </Form.Item>
@@ -108,7 +108,7 @@ class SignUp extends React.Component {
                             trailing:true
                         })} block type="primary" htmlType="button">
                             Sign Up
-                    </Button>
+                        </Button>
                     </Form.Item>
                 </Form>
 
@@ -117,7 +117,7 @@ class SignUp extends React.Component {
                     <NavLink to="/login">login now!</NavLink>
                 </div>
 
-            </div >
+            </div>
 
         )
     }

@@ -6,3 +6,4 @@ export let normalizeInput=num=>val=>{
       :val.trim()
     :'';
 }
+

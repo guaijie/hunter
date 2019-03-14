@@ -10,11 +10,9 @@ class EasyMenu extends React.Component {
   }
 
   render() {
-    let prefix=this.props.prefix;
-    let suffix=this.props.suffix;
-    let title=this.props.title;
+    let {prefix,suffix,title,className}=this.props;
     return (
-      <div className="Easy-menu">
+      <div className={`Easy-menu ${className}`}>
         <Row type="flex" align="middle">
           <Col span={6}>
             {prefix}
