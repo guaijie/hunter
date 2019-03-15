@@ -11,8 +11,8 @@ class ExpertUser extends React.Component {
     
     return (
       <div>
-        <div class="user-info">
-          <div class="infos">
+        <div className="user-info">
+          <div className="infos">
             <EasyInput 
               className="info"
               title={<div className="info-title">头像</div>}
@@ -27,6 +27,14 @@ class ExpertUser extends React.Component {
               suffix={<div className="info-suffix"><Icon type="right" /></div>}
             >
               <div className="info-body">昵称</div>
+            </EasyInput>
+
+            <EasyInput 
+              className="info"
+              title={<div className="info-title">姓名</div>}
+              suffix={<div className="info-suffix"><Icon type="right" /></div>}
+            >
+              <div className="info-body">阿布</div>
             </EasyInput>
 
             <EasyInput 
@@ -94,7 +102,7 @@ class ExpertUser extends React.Component {
           }"
         >
           <template #extra>
-            <div class="extra">{{textareaSize}}</div>
+            <div className="extra">{{textareaSize}}</div>
           </template>
         </text-input>*/}
       </div>

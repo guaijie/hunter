@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.13.5",
+    "antd": "^3.15.0",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.11",
@@ -31,10 +31,9 @@
     "extends": "react-app"
   },
   "browserslist": [
-    ">0.2%",
+    ">1%",
     "not dead",
-    "not ie <= 10",
-    "not op_mini all"
+    "not ie <= 10"
   ],
   "devDependencies": {
     "antd-theme-generator": "^1.1.6",

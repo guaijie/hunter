@@ -31,15 +31,23 @@ class BossUser extends React.Component {
 
             <EasyInput 
               className="info"
-              title={<div className="info-title">性别</div>}
+              title={<div className="info-title">企业名称</div>}
               suffix={<div className="info-suffix"><Icon type="right" /></div>}
             >
-              <div className="info-body">保密</div>
+              <div className="info-body">阿布公司</div>
             </EasyInput>
 
             <EasyInput 
               className="info"
-              title={<div className="info-title">电话</div>}
+              title={<div className="info-title">法定代表</div>}
+              suffix={<div className="info-suffix"><Icon type="right" /></div>}
+            >
+              <div className="info-body">阿布</div>
+            </EasyInput>
+
+            <EasyInput 
+              className="info"
+              title={<div className="info-title">联系电话</div>}
               suffix={<div className="info-suffix"><Icon type="right" /></div>}
             >
               <div className="info-body">1888888888</div>
@@ -47,26 +55,18 @@ class BossUser extends React.Component {
             
             <EasyInput 
               className="info"
-              title={<div className="info-title">出生年月</div>}
+              title={<div className="info-title">企业类型</div>}
               suffix={<div className="info-suffix"><Icon type="right" /></div>}
             >
-              <div className="info-body">1998-01-01</div>
+              <div className="info-body">民营企业</div>
             </EasyInput>
           
             <EasyInput 
               className="info"
-              title={<div className="info-title">最高学历</div>}
+              title={<div className="info-title">行业类型</div>}
               suffix={<div className="info-suffix"><Icon type="right" /></div>}
             >
-              <div className="info-body">本科</div>
-            </EasyInput>
-
-            <EasyInput 
-              className="info"
-              title={<div className="info-title">专业</div>}
-              suffix={<div className="info-suffix"><Icon type="right" /></div>}
-            >
-              <div className="info-body">计算机</div>
+              <div className="info-body">互联网</div>
             </EasyInput>
 
             <EasyInput 

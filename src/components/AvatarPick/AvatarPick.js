@@ -15,7 +15,7 @@ class AvatarPick extends React.Component{
     state={
         visible:false,
     }
-    handleCancel=()=>{
+    closeModel=()=>{
         this.setState({
             visible:false
         })
@@ -48,8 +48,9 @@ class AvatarPick extends React.Component{
                     visible={visible}
                     title={<h2 className="modal-title">选择头像</h2>}
                     footer={
-                        <div className="modal-footer" onClick={this.handleCancel}>cancel</div>
+                        <div className="modal-footer" onClick={this.closeModel}>cancel</div>
                     }
+                    onCancel={this.closeModel}
                     width="80vw"
                     closable={false}
                 >

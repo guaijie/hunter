@@ -8,11 +8,19 @@ import './Login.less';
 import { userLogin } from '@/reducers/userReducer.js'
 import { debounce } from 'lodash'
 
+let paths=['expertinfo','bossinfo'];
 @connect(
     state=>state.user,
     {userLogin}
 )
 class Login extends React.Component{
+    componentDidUpdate(){
+        let {isAuth,userType,history:{push}}=this.props;
+        if(isAuth){
+            push('/'+paths[userType])
+        }
+        return 
+    }
 
     handleSubmit = e => {
         e.preventDefault();
@@ -95,7 +103,6 @@ class Login extends React.Component{
                             Log in
                         </Button>
                     </Form.Item> 
-                    <a>Forgot password</a>
                 </Form>
                             
                 <div className="Login-sign">

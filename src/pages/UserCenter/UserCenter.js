@@ -15,6 +15,8 @@ import './UserCenter.less';
 class UserCenter extends React.Component{
   
   render(){
+    let {userType}=this.props;
+    console.log(this.props)
     return (
       <div className="user-center">
         <EasyMenu
@@ -24,7 +26,7 @@ class UserCenter extends React.Component{
         >
           <h2 className="menu-title">用户中心</h2>
         </EasyMenu>
-        <BossUser/>
+        {userType===1?<BossUser/>:<ExpertUser/>}
       </div>
     )
   }
