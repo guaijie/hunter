@@ -6,25 +6,17 @@ import Bootstrap from './pages/Bootstrap/Bootstrap.js'
 import Home from './pages/Home/Home.js'
 import SignUp from './pages/SignUp/SignUp.js'
 import Login from './pages/Login/Login.js'
-import BossInfo from './pages/BossInfo/BossInfo.js'
-import ExpertInfo from './pages/ExpertInfo/ExpertInfo.js'
-import ExpertUser from './components/UserInfo/ExpertUser.js'
-import BossUser from './components/UserInfo/BossUser.js'
+import InfoCompletion from './pages/InfoCompletion/InfoCompletion.js'
 import UserCenter from './pages/UserCenter/UserCenter.js'
 const routes=[
     {path:'/',exact:true,component:Bootstrap},
     {path:'/home',component:Home},
     {path:'/login',component:Login},
     {path:'/signup',component:SignUp},
-    {path:'/bossinfo',component:BossInfo},
-    {path:'/expertinfo',component:ExpertInfo},
+    {path:'/infocompletion',component:InfoCompletion},
     {path:'/usercenter',component:UserCenter},
-    {path:'/bossuser',component:BossUser},
 ];
-const userRoutes=[
-    {path:'/expertuser',component:ExpertUser},
-    {path:'/bossuser',component:BossUser},
-]
+
 
 
 const supportsHistory = 'pushState' in window.history

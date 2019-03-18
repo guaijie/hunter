@@ -8,7 +8,6 @@ import { userRegiset } from '@/reducers/userReducer.js'
 import { debounce } from 'lodash'
 import {normalizeInput} from '@/util.js';
 
-let paths=['expertinfo','bossinfo']
 @connect(
     state=>state.user,
     {userRegiset}
@@ -16,9 +15,9 @@ let paths=['expertinfo','bossinfo']
 class SignUp extends React.Component {
 
     componentDidUpdate(){
-        let {isAuth,userType,history:{push}}=this.props;
+        let {isAuth,history:{push}}=this.props;
         if(isAuth){
-            push('/'+paths[userType])
+            push('/infocompletion')
         }
         return 
     }

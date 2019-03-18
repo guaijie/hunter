@@ -10,16 +10,21 @@ import { getUserInfo } from '@/reducers/userReducer.js'
     {getUserInfo}
 )
 class AuthType extends React.Component{
+
     componentDidMount(){
         let paths=['/login','/signup'];
         let pathname=this.props.location.pathname;
-        let push=this.props.history.push;
+        let {push}=this.props.history;
         if(paths.includes(pathname)){
             return null
         }else{
-            console.log(12)
-            this.props.getUserInfo();
+            this.props.getUserInfo()
+            .then(v=>{
+                if(!v) push('/login')
+            })
         }
+
+        console.log('didmount')
         
     }
     render(){

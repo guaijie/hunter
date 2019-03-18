@@ -1,5 +1,5 @@
 import React from 'react'
-import './Logo.css';
+import './Logo.less';
 import logo from '@/logo.svg'
 
 export default function Logo(){

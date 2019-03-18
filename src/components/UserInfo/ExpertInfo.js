@@ -5,7 +5,7 @@ import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import './UserInfo.less';
 
 
-class ExpertUser extends React.Component {
+class ExpertInfo extends React.Component {
 
   render() {
     
@@ -111,4 +111,4 @@ class ExpertUser extends React.Component {
 
 }
 
-export default ExpertUser
+export default ExpertInfo

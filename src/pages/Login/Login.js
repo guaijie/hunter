@@ -15,9 +15,9 @@ let paths=['expertinfo','bossinfo'];
 )
 class Login extends React.Component{
     componentDidUpdate(){
-        let {isAuth,userType,history:{push}}=this.props;
+        let {isAuth,history:{push}}=this.props;
         if(isAuth){
-            push('/'+paths[userType])
+            push('/honme')
         }
         return 
     }

@@ -25,7 +25,7 @@ export function user(state=initState,{type,payload}){
 
 export function getUserInfo(){
     return dispatch=>{
-        axios.post('/user/userInfo')
+        return axios.get('/user/userInfo')
         .then(({data:res})=>{
             console.log(res)
             if(res.success){
@@ -33,13 +33,18 @@ export function getUserInfo(){
                     type:SUCCESS,
                     payload:{isAuth:true,...res.user}
                 })
+                return true
             }else{
                 message.error(res.msg,1.5);
                 dispatch({
-                    type:SUCCESS,
+                    type:FAILED,
                     payload:{isAuth:false}
                 })
+                return false
             }
+        })
+        .catch(err=>{
+            message.error(err.message,1.5)
         })
     }
 }
@@ -58,10 +63,13 @@ export function userLogin(data){
             }else{
                 message.error(res.msg,1.5);
                 dispatch({
-                    type:SUCCESS,
+                    type:FAILED,
                     payload:{isAuth:false}
                 })
             }
+        })
+        .catch(err=>{
+            message.error(err.message,1.5)
         })
     }
 }
@@ -79,10 +87,39 @@ export function userRegiset(data){
             }else{
                 message.error(res.msg,1.5);
                 dispatch({
-                    type:SUCCESS,
+                    type:FAILED,
                     payload:{isAuth:false}
                 })
             }
+        })
+        .catch(err=>{
+            message.error(err.message,1.5)
+        })
+    }
+    
+}
+
+export function userUpdate(data){
+    return dispatch=>{
+        axios.put('/user/userInfo',data)
+        .then(({data:res})=>{
+            console.log(res)
+            if(res.success){
+                message.success(res.msg,1.5);
+                dispatch({
+                    type:SUCCESS,
+                    payload:{isAuth:true,...res.user}
+                })
+            }else{
+                message.error(res.msg,1.5);
+                dispatch({
+                    type:FAILED,
+                    payload:{isAuth:false}
+                })
+            }
+        })
+        .catch(err=>{
+            message.error(err.message,1.5)
         })
     }
     

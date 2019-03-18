@@ -4,11 +4,11 @@ import { NavLink } from 'react-router-dom'
 import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 import EasyTextarea from '@/components/EasyTextarea/EasyTextarea.js'
-import './BossInfo.less';
+import './UserCompletion.less';
 import {normalizeInput} from '@/util.js';
 
 
-class BossInfo extends React.Component {
+class BossCompletion extends React.Component {
   textareaSize=3000
   state={
     avatar:'male',
@@ -73,7 +73,7 @@ class BossInfo extends React.Component {
       {value:2,label:'化学化工'}
     ];
     return (
-      <div className="Boss-info">
+      <div className="user-completion">
         <div style={{display:isOpen?'block':'none'}}>
           <EasyMenu
             prefix={prefix}
@@ -203,5 +203,5 @@ class BossInfo extends React.Component {
 
 }
 
-BossInfo=Form.create({ name: 'bossinfo' })(BossInfo);
-export default BossInfo
+BossCompletion=Form.create({ name: 'usercompletion' })(BossCompletion);
+export default BossCompletion

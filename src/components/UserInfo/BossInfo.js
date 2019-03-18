@@ -5,7 +5,7 @@ import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import './UserInfo.less';
 
 
-class BossUser extends React.Component {
+class BossInfo extends React.Component {
 
   render() {
     
@@ -103,4 +103,4 @@ class BossUser extends React.Component {
 
 }
 
-export default BossUser
+export default BossInfo

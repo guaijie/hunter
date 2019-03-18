@@ -1,20 +1,26 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Select, Row, Col, DatePicker} from 'antd'
-import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 import EasyTextarea from '@/components/EasyTextarea/EasyTextarea.js'
-import './ExpertInfo.less';
+import './UserCompletion.less';
 import {normalizeInput} from '@/util.js';
+import { userUpdate } from '@/reducers/userReducer.js'
 
+let textareaSize=3000;
 
-class ExpertInfo extends React.Component {
-  textareaSize=3000
+@connect(
+  state=>state.user,
+  {userUpdate}
+)
+class ExpertCompletion extends React.Component {
+  
   state={
     avatar:'male',
     isOpen:true,
     description:'',
-    textareaSize:this.textareaSize
+    textareaSize:textareaSize
   }
   getAvatar=(v)=>{
     this.setState({
@@ -25,7 +31,7 @@ class ExpertInfo extends React.Component {
     var { validateFields } = this.props.form;
     validateFields((errors, values) => {
       if (!errors) {
-        console.log(values)
+        this.props.userUpdate(values);
       }
     });
   }
@@ -49,7 +55,7 @@ class ExpertInfo extends React.Component {
   change=(e)=>{
     let len=e.target.value.length;
     this.setState({
-      textareaSize:this.textareaSize-len
+      textareaSize:textareaSize-len
     })
   }
   render() {
@@ -60,7 +66,7 @@ class ExpertInfo extends React.Component {
     ]
 
     let prefix = <Button type="primary" shape="circle" icon="arrow-left" />;
-    let {getFieldDecorator}=this.props.form;
+    let {form:{getFieldDecorator}}=this.props;
     let Option=Select.Option;
     let TextArea=Input.TextArea;
     let education=[
@@ -73,7 +79,7 @@ class ExpertInfo extends React.Component {
       {value:2,label:'化学化工'}
     ];
     return (
-      <div className="Boss-info">
+      <div className="user-completion">
         <div style={{display:isOpen?'block':'none'}}>
           <EasyMenu
             prefix={prefix}
@@ -84,41 +90,41 @@ class ExpertInfo extends React.Component {
             <AvatarPick avatar={this.getAvatar}></AvatarPick>
           </div>
           <Form className="form">
-            <Form.Item>
+            <Form.Item className="form-item">
               {getFieldDecorator(
                 'avatar',{initialValue:avatar}
               )(<Input hidden />)
               }
             </Form.Item>
-            <Form.Item>
+            <Form.Item className="form-item">
               {getFieldDecorator('realname',{rules,normalize})(
                 <Input
                   prefix={
                     <Icon type="user" style={{color:'rgba(0,0,0,.25)'}} />
                   }
-                  placeholder="请输入真实姓名"
+                  placeholder="真实姓名"
                 />
               )}
             </Form.Item>
             <Row gutter={6}>
               <Col span={12}>
-                <Form.Item>
+                <Form.Item className="form-item">
                   {getFieldDecorator('birthday',{rules})(
                     <DatePicker
                       style="width:100%"
-                      placeholder="请选择出生年月"
+                      placeholder="出生年月"
                     />
                   )}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item>
+                <Form.Item className="form-item">
                   {getFieldDecorator('phone',{rules,normalize:normalizeInput(11)})(
                     <Input
                       prefix={
                         <Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />
                       }
-                      placeholder="请输入联系电话"
+                      placeholder="联系电话"
                     />
                   )}
                 </Form.Item>
@@ -126,23 +132,23 @@ class ExpertInfo extends React.Component {
             </Row>
             <Row gutter={6}>
               <Col span={12}>
-                <Form.Item>
+                <Form.Item className="form-item">
                   {getFieldDecorator('school',{rules,normalize})(
                     <Input
                       prefix={
                         <Icon type="bank" style={{ color: 'rgba(0,0,0,.25)' }} />
                       }
-                      placeholder="请输毕业学校"
+                      placeholder="毕业学校"
                     />
                   )}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item>
+                <Form.Item className="form-item">
                   {getFieldDecorator('education',{rules})(
                     <Select
                       showSearch={true}
-                      placeholder="请输入最高学历"
+                      placeholder="最高学历"
                     >
                       {education.map(d => <Option key={d.value}>{d.label}</Option>)}
                     </Select>
@@ -151,7 +157,7 @@ class ExpertInfo extends React.Component {
               </Col>
             </Row>
             
-            <Form.Item>
+            <Form.Item className="form-item">
               {getFieldDecorator('specialties',{rules})(
                 <Select
                   tokenSeparators={[',',' ']}
@@ -159,13 +165,13 @@ class ExpertInfo extends React.Component {
                   showSearch={true}
                   options={specialties}
                   maxTagCount={2}
-                  placeholder="请输入所学专业"
+                  placeholder="所学专业"
                 >
                   {specialties.map(d => <Option key={d.value}>{d.label}</Option>)}
                 </Select>
               )}
             </Form.Item>
-            <Form.Item>
+            <Form.Item className="form-item">
               {getFieldDecorator('description',{
                 rules,
                 initialValue:description,
@@ -181,11 +187,11 @@ class ExpertInfo extends React.Component {
                     this.openEasyTextarea
                   }
                   className="text-area"
-                  placeholder="请输入个人简介"
+                  placeholder="个人简介"
                 />
               )}
             </Form.Item>
-            <Form.Item>
+            <Form.Item className="form-item">
               <Button block type="primary" onClick={this.handleSubmit} >
                 submit
               </Button>
@@ -215,5 +221,5 @@ class ExpertInfo extends React.Component {
 
 }
 
-ExpertInfo=Form.create({ name: 'expertinfo' })(ExpertInfo);
-export default ExpertInfo
+ExpertCompletion=Form.create({ name: 'usercompletion' })(ExpertCompletion);
+export default ExpertCompletion
