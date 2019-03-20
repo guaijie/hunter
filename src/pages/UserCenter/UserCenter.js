@@ -7,6 +7,7 @@ import BossInfo from '@/components/UserInfo/BossInfo.js'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 // import { getUserInfo } from '@/reducers/userReducer.js'
 import './UserCenter.less';
+import browserCookies from 'browser-cookies'
 
 @connect(
     state=>state.user,
@@ -14,6 +15,9 @@ import './UserCenter.less';
 )
 class UserCenter extends React.Component{
   
+  componentDidMount=()=>{
+    console.log(browserCookies.all())
+  }
   render(){
     let {userType,history:{goBack}}=this.props;
     console.log(this.props)
