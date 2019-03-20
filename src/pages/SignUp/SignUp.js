@@ -15,7 +15,7 @@ import {normalizeInput} from '@/util.js';
 class SignUp extends React.Component {
 
     componentDidUpdate(){
-        let {isAuth,history:{push}}=this.props;
+        let {isAuth,userType,history:{push}}=this.props;
         if(isAuth){
             push('/infocompletion')
         }
@@ -29,7 +29,6 @@ class SignUp extends React.Component {
             if (!errors) {
                 console.log(values)
                 this.props.userRegiset(values);
-                console.log(this.props)
             }
         })
     }
@@ -50,7 +49,7 @@ class SignUp extends React.Component {
             validateFirst:true,
             rules:[
                 {required:true,message:'Please input your password!'},
-                {min:6,message:'用户名不能低于6位!'},
+                {min:6,message:'密码不能低于6位!'},
                 {pattern:/^(?!\d+$)(?![a-zA-Z]+$)[0-9a-zA-Z]+$/,message:'必须由字母和数字组成!'},
             ]
         };

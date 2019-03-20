@@ -1,20 +1,35 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Select, Row, Col} from 'antd'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 import EasyTextarea from '@/components/EasyTextarea/EasyTextarea.js'
 import './UserCompletion.less';
 import {normalizeInput} from '@/util.js';
+import { userUpdate } from '@/reducers/userReducer.js'
+import {getCompanyTypes} from '@/reducers/companyReducer.js'
+import {getIndustries} from '@/reducers/industryReducer.js'
 
-
+let textareaSize=3000
+@connect(
+  state=>({...state.company,...state.industry}),
+  {userUpdate,getCompanyTypes,getIndustries}
+)
+@withRouter
 class BossCompletion extends React.Component {
-  textareaSize=3000
+  componentDidMount=()=>{
+    let {companyTypes,industries}=this.props;
+    if(companyTypes.length!==0&&industries!==0) return 
+    this.props.getCompanyTypes();
+    this.props.getIndustries();
+  }
   state={
     avatar:'male',
     isOpen:true,
     description:'',
-    textareaSize:this.textareaSize
+    textareaSize:textareaSize
   }
   getAvatar=(v)=>{
     this.setState({
@@ -22,10 +37,13 @@ class BossCompletion extends React.Component {
     })
   }
   handleSubmit=(e)=>{
-    var { validateFields } = this.props.form;
+    var { form:{validateFields},history:{push} } = this.props;
     validateFields((errors, values) => {
       if (!errors) {
-        console.log(values)
+        this.props.userUpdate(values)
+        .then((v)=>{
+          if(v) push('/home')
+        })
       }
     });
   }
@@ -49,7 +67,7 @@ class BossCompletion extends React.Component {
   change=(e)=>{
     let len=e.target.value.length;
     this.setState({
-      textareaSize:this.textareaSize-len
+      textareaSize:textareaSize-len
     })
   }
   render() {
@@ -60,18 +78,21 @@ class BossCompletion extends React.Component {
     ]
 
     let prefix = <Button type="primary" shape="circle" icon="arrow-left" />;
-    let {getFieldDecorator}=this.props.form;
+    let {form:{getFieldDecorator},companyTypes,industries}=this.props;
     let Option=Select.Option;
     let TextArea=Input.TextArea;
-    let companyTypes=[
-      {value:1,label:'民营企业'},
-      {value:2,label:'国有企业'},
-      {value:3,label:'上市企业'}
-    ];
-    let industryTypes=[
-      {value:1,label:'计算机与互联网'},
-      {value:2,label:'化学化工'}
-    ];
+    companyTypes=companyTypes.map(v=>{
+      return {
+        value:v._id,
+        label:v.name
+      }
+    })
+    industries=industries.map(v=>{
+      return {
+        value:v._id,
+        label:v.name
+      }
+    })
     return (
       <div className="user-completion">
         <div style={{display:isOpen?'block':'none'}}>
@@ -140,16 +161,15 @@ class BossCompletion extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('industryTypes',{rules})(
+              {getFieldDecorator('industries',{rules})(
                 <Select
                   tokenSeparators={[',',' ']}
                   mode="multiple"
                   showSearch={true}
-                  options={industryTypes}
                   maxTagCount={2}
                   placeholder="请输入行业类型"
                 >
-                  {industryTypes.map(d => <Option key={d.value}>{d.label}</Option>)}
+                  {industries.map(d => <Option key={d.value}>{d.label}</Option>)}
                 </Select>
               )}
             </Form.Item>

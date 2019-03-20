@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message } from 'antd';
 
-const SUCCESS='success';
+const SUCCESS='USER_SUCCESS';
 const FAILED='FAILED'
 
 let initState={
@@ -101,7 +101,7 @@ export function userRegiset(data){
 
 export function userUpdate(data){
     return dispatch=>{
-        axios.put('/user/userInfo',data)
+        return axios.put('/user/userInfo',data)
         .then(({data:res})=>{
             console.log(res)
             if(res.success){
@@ -110,11 +110,12 @@ export function userUpdate(data){
                     type:SUCCESS,
                     payload:{isAuth:true,...res.user}
                 })
+                return true
             }else{
                 message.error(res.msg,1.5);
                 dispatch({
                     type:FAILED,
-                    payload:{isAuth:false}
+                    payload:{isAuth:true}
                 })
             }
         })

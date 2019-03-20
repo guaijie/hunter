@@ -1,21 +1,30 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Select, Row, Col, DatePicker} from 'antd'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import AvatarPick from '@/components/AvatarPick/AvatarPick.js'
 import EasyMenu from '@/components/EasyMenu/EasyMenu.js'
 import EasyTextarea from '@/components/EasyTextarea/EasyTextarea.js'
 import './UserCompletion.less';
 import {normalizeInput} from '@/util.js';
 import { userUpdate } from '@/reducers/userReducer.js'
+import {getEducations} from '@/reducers/educationReducer.js'
+import {getSpecialties} from '@/reducers/specialtyReducer.js'
 
 let textareaSize=3000;
 
 @connect(
-  state=>state.user,
-  {userUpdate}
+  state=>({...state.education,...state.specialty}),
+  {userUpdate,getEducations,getSpecialties}
 )
+@withRouter
 class ExpertCompletion extends React.Component {
-  
+  componentDidMount=()=>{
+    let {educations,specialties}=this.props;
+    if(educations.length!==0&&specialties!==0) return 
+    this.props.getEducations();
+    this.props.getSpecialties();
+  }
   state={
     avatar:'male',
     isOpen:true,
@@ -28,10 +37,14 @@ class ExpertCompletion extends React.Component {
     })
   }
   handleSubmit=(e)=>{
-    var { validateFields } = this.props.form;
+    var { form:{validateFields},history:{push} } = this.props;
     validateFields((errors, values) => {
       if (!errors) {
-        this.props.userUpdate(values);
+        this.props.userUpdate(values)
+        .then((v)=>{
+          if(v) push('/home')
+          
+        })
       }
     });
   }
@@ -66,18 +79,21 @@ class ExpertCompletion extends React.Component {
     ]
 
     let prefix = <Button type="primary" shape="circle" icon="arrow-left" />;
-    let {form:{getFieldDecorator}}=this.props;
+    let {form:{getFieldDecorator},educations,specialties}=this.props;
     let Option=Select.Option;
     let TextArea=Input.TextArea;
-    let education=[
-      {value:1,label:'博士'},
-      {value:2,label:'硕士'},
-      {value:3,label:'本科'}
-    ];
-    let specialties=[
-      {value:1,label:'计算机与互联网'},
-      {value:2,label:'化学化工'}
-    ];
+    educations=educations.map(v=>{
+      return {
+        value:v._id,
+        label:v.name
+      }
+    })
+    specialties=specialties.map(v=>{
+      return {
+        value:v._id,
+        label:v.name
+      }
+    })
     return (
       <div className="user-completion">
         <div style={{display:isOpen?'block':'none'}}>
@@ -150,7 +166,7 @@ class ExpertCompletion extends React.Component {
                       showSearch={true}
                       placeholder="最高学历"
                     >
-                      {education.map(d => <Option key={d.value}>{d.label}</Option>)}
+                      {educations.map(d => <Option key={d.value}>{d.label}</Option>)}
                     </Select>
                   )}
                 </Form.Item>

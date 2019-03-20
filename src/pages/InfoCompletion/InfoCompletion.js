@@ -14,7 +14,7 @@ class UserCenter extends React.Component{
     let {userType}=this.props;
     return (
       <div className="info-completion">
-        {userType===1?<BossCompletion/>:<ExpertCompletion/>}
+        {userType===1?<BossCompletion/>:userType===0?<ExpertCompletion/>:''}
       </div>
     )
   }

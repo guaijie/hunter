@@ -17,7 +17,7 @@ class Login extends React.Component{
     componentDidUpdate(){
         let {isAuth,history:{push}}=this.props;
         if(isAuth){
-            push('/honme')
+            push('/home')
         }
         return 
     }
