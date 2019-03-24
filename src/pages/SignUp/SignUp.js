@@ -93,14 +93,6 @@ class SignUp extends React.Component {
                         )}
                     </Form.Item>
                     <Form.Item>
-                        {getFieldDecorator('remember', {
-                            valuePropName: 'checked',
-                            initialValue: true,
-                        })(
-                            <Checkbox>Remember me</Checkbox>
-                        )}
-                    </Form.Item>
-                    <Form.Item>
                         <Button onClick={debounce(this.handleSubmit,500,{
                             leading:false,
                             trailing:true
